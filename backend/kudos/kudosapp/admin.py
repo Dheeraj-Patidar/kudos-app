@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Organization, Kudos
+
+from .models import Kudos, Organization, User
 
 
 class CustomUserAdmin(UserAdmin):
@@ -8,10 +9,9 @@ class CustomUserAdmin(UserAdmin):
     ordering = ["email"]
     search_fields = ("email", "organization")
     list_filter = ("is_staff", "is_superuser", "is_active")
-    # ✅ Customize the fieldsets to remove 'username'
+    # Customize the fieldsets to remove 'username'
     fieldsets = (
         (None, {"fields": ("email", "password", "organization")}),
-
         (
             "Permissions",
             {
@@ -27,13 +27,20 @@ class CustomUserAdmin(UserAdmin):
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
 
-    # ✅ Define fields for user creation in the admin panel
+    # Define fields for user creation in the admin panel
     add_fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", "password1", "password2", "organization", "is_staff", "is_active"),
+                "fields": (
+                    "email",
+                    "password1",
+                    "password2",
+                    "organization",
+                    "is_staff",
+                    "is_active",
+                ),
             },
         ),
     )
