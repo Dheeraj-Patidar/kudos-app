@@ -5,10 +5,11 @@ from .models import Kudos, Organization, User
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ["email", "organization", "is_staff"]
+    list_display = ["email", "organization", "is_staff", "kudos_count", "kudos_last_reset"]
     ordering = ["email"]
     search_fields = ("email", "organization")
     list_filter = ("is_staff", "is_superuser", "is_active")
+    readonly_fields = ("kudos_count","kudos_last_reset", "date_joined")
     # Customize the fieldsets to remove 'username'
     fieldsets = (
         (None, {"fields": ("email", "password", "organization")}),
@@ -24,6 +25,8 @@ class CustomUserAdmin(UserAdmin):
                 )
             },
         ),
+        ("personal", {"fields": ("first_name", "last_name")}),
+        ("Kudos", {"fields": ("kudos_count", "kudos_last_reset")}),
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
 
@@ -61,6 +64,13 @@ class KudosAdmin(admin.ModelAdmin):
     list_display = ["sender", "receiver", "message", "timestamp"]
     search_fields = ("sender", "receiver")
     list_filter = ("timestamp",)
+    readonly_fields = ("timestamp",)
+
+    fieldsets = (
+        
+        ("kudos details", {"fields": ("sender", "sender_first_name", "sender_last_name", "receiver", "message")}),
+        ("Important dates", {"fields": ("timestamp",)}),
+    )
 
 
 admin.site.register(Kudos, KudosAdmin)

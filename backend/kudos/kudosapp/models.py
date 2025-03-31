@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
 from .managers import CustomUserManager
+from django.utils.timezone import now
+# from datetime import timedelta
 
 
 class Organization(models.Model):
@@ -15,7 +17,8 @@ class Organization(models.Model):
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
-
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     organization = models.ForeignKey(
@@ -25,6 +28,9 @@ class User(AbstractUser):
         null=True,
         blank=True,
     )
+
+    kudos_count = models.PositiveIntegerField(default=3)
+    kudos_last_reset = models.DateTimeField(default=now)
 
     objects = CustomUserManager()
 
@@ -49,6 +55,9 @@ class Kudos(models.Model):
         on_delete=models.CASCADE,
         related_name="kudos_given",
     )
+    sender_first_name = models.CharField(max_length=255, null=True, blank=True)
+    sender_last_name = models.CharField(max_length=255, null=True, blank=True)
+
     receiver = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

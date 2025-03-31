@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
 from .models import Kudos, Organization, User
+from django.utils.timezone import now
+from datetime import timedelta
 
 
 class SignupSerializer(serializers.ModelSerializer):
@@ -12,7 +13,7 @@ class SignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ["email", "password", "repassword", "organization"]
+        fields = ["email", "first_name", "last_name", "password", "repassword", "organization"]
 
     def validate(self, data):
         password = data["password"]
@@ -20,7 +21,7 @@ class SignupSerializer(serializers.ModelSerializer):
 
         if password != repassword:
             raise ValidationError(
-                {"password": "password and repassword do not match"}
+                {"repassword": "password and repassword do not match"}
             )
         return data
 
@@ -62,7 +63,7 @@ class KudosSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Kudos
-        fields = ["id", "sender", "receiver", "message", "timestamp"]
+        fields = ["id", "sender", "receiver", "sender_first_name", "sender_last_name", "message", "timestamp"]
 
     def validate(self, data):
         sender = self.context["request"].user  # Get sender from request
@@ -97,12 +98,17 @@ class KudosSerializer(serializers.ModelSerializer):
 class ResetPasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True, required=True)
     new_password = serializers.CharField(write_only=True, required=True)
+    confirm_password = serializers.CharField(write_only=True, required=True)
 
     def validate(self, data):
+        if data["new_password"] != data["confirm_password"]:
+            raise ValidationError(
+                {"confirm_password": "Passwords do not match."}
+            )
         user = self.context["request"].user
         if not user.check_password(data["old_password"]):
             raise ValidationError({"old_password": "Incorrect password."})
-
+        
         return data
 
     def update(self, instance, validated_data):
@@ -110,3 +116,34 @@ class ResetPasswordSerializer(serializers.Serializer):
         instance.set_password(new_password)
         instance.save()
         return instance
+    
+
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        if not User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("User with this email does not exist.")
+        return value
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    new_password = serializers.CharField(write_only=True, min_length=8)
+
+    def validate_new_password(self, value):
+        if len(value) < 8:
+            raise serializers.ValidationError("Password must be at least 8 characters long.")
+        return value
+
+
+class KudosRemainingSerializer(serializers.Serializer):
+    kudos_remaining = serializers.SerializerMethodField()
+
+    def get_kudos_remaining(self, obj):
+        """Returns the number of Kudos the user can still give within the 7-day limit."""
+        kudos_limit = 3  # Set the weekly limit
+        one_week_ago = now() - timedelta(days=7)
+        
+        given_kudos_count = Kudos.objects.filter(sender=obj, timestamp__gte=one_week_ago).count()
+        
+        return max(kudos_limit - given_kudos_count, 0)
