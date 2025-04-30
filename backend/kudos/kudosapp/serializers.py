@@ -107,8 +107,11 @@ class ResetPasswordSerializer(serializers.Serializer):
             )
         user = self.context["request"].user
         if not user.check_password(data["old_password"]):
-            raise ValidationError({"old_password": "Incorrect password."})
-        
+            raise ValidationError({"old_password": "Old password is incorrect."})
+        if not len(data["new_password"]) >= 8:
+            raise ValidationError(
+                {"new_password": "Password must be at least 8 characters long."}
+            )
         return data
 
     def update(self, instance, validated_data):

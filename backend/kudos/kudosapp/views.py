@@ -193,7 +193,6 @@ class PasswordResetView(GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class PasswordResetConfirmView(GenericAPIView):
     serializer_class = PasswordResetConfirmSerializer
 
@@ -212,6 +211,6 @@ class PasswordResetConfirmView(GenericAPIView):
         if serializer.is_valid():
             user.set_password(serializer.validated_data["new_password"])
             user.save()
-            return Response({"message": "Password reset successful!"}, status=status.HTTP_200_OK)
+            return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
