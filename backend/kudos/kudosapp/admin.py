@@ -5,11 +5,17 @@ from .models import Kudos, Organization, User
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ["email", "organization", "is_staff", "kudos_count", "kudos_last_reset"]
+    list_display = [
+        "email",
+        "organization",
+        "is_staff",
+        "kudos_count",
+        "kudos_last_reset",
+    ]
     ordering = ["email"]
     search_fields = ("email", "organization")
     list_filter = ("is_staff", "is_superuser", "is_active")
-    readonly_fields = ("kudos_count","kudos_last_reset", "date_joined")
+    readonly_fields = ("kudos_count", "kudos_last_reset", "date_joined")
     # Customize the fieldsets to remove 'username'
     fieldsets = (
         (None, {"fields": ("email", "password", "organization")}),
@@ -67,8 +73,18 @@ class KudosAdmin(admin.ModelAdmin):
     readonly_fields = ("timestamp",)
 
     fieldsets = (
-        
-        ("kudos details", {"fields": ("sender", "sender_first_name", "sender_last_name", "receiver", "message")}),
+        (
+            "kudos details",
+            {
+                "fields": (
+                    "sender",
+                    "sender_first_name",
+                    "sender_last_name",
+                    "receiver",
+                    "message",
+                )
+            },
+        ),
         ("Important dates", {"fields": ("timestamp",)}),
     )
 

@@ -14,13 +14,13 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-from dotenv import load_dotenv
 from celery.schedules import crontab
+from dotenv import load_dotenv
+
 load_dotenv()  # Load environment variables from .env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -124,7 +124,6 @@ USE_TZ = True  # Keep this True to ensure Django uses timezone-aware datetimes
 USE_I18N = True
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -181,9 +180,8 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Asia/Kolkata"
 
 CELERY_BEAT_SCHEDULE = {
-      'add-every-2-mins': {
-        'task': 'kudosapp.tasks.reset_kudos_count',
-        'schedule': crontab(hour=0, minute=0, day_of_week=1),
-
-        }
+    "add-every-2-mins": {
+        "task": "kudosapp.tasks.reset_kudos_count",
+        "schedule": crontab(hour=0, minute=0, day_of_week=1),
+    }
 }

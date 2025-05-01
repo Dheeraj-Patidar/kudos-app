@@ -1,9 +1,11 @@
 import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
+
 from kudosapp.models import Organization
 
 User = get_user_model()
+
 
 @pytest.fixture
 def organization():
@@ -17,7 +19,7 @@ def user(organization):
         password="testpass123",
         organization=organization,
         first_name="Sender",
-        last_name="User"
+        last_name="User",
     )
 
 
@@ -28,7 +30,7 @@ def receiver(organization):
         password="testpass123",
         organization=organization,
         first_name="Receiver",
-        last_name="User"
+        last_name="User",
     )
 
 
@@ -39,7 +41,9 @@ def client():
 
 @pytest.fixture
 def auth_client(client, user):
-    response = client.post("/api/login/", {"email": user.email, "password": "testpass123"})
+    response = client.post(
+        "/api/login/", {"email": user.email, "password": "testpass123"}
+    )
     token = response.data["access"]
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
     return client

@@ -16,7 +16,7 @@ def test_create_org_with_empty_name(auth_client):
     url = reverse("organization")
     response = auth_client.post(url, {"name": ""})
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert "This field may not be blank." in str(response.data['name'])
+    assert "This field may not be blank." in str(response.data["name"])
 
 
 @pytest.mark.django_db

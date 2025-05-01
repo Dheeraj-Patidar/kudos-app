@@ -1,32 +1,34 @@
 from datetime import timedelta
+
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
 from django.utils import timezone
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import ValidationError
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.utils.http import urlsafe_base64_decode
-from django.utils.encoding import force_str
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth import get_user_model
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.core.mail import send_mail
-from rest_framework.generics import GenericAPIView
-from rest_framework import status
-from .serializers import PasswordResetSerializer, PasswordResetConfirmSerializer
+
+from .serializers import (
+    PasswordResetConfirmSerializer,
+    PasswordResetSerializer,
+)
+
 User = get_user_model()
 
 from .models import Kudos, Organization, User
 from .serializers import (
+    KudosRemainingSerializer,
     KudosSerializer,
     OrganizationSerializer,
+    PasswordResetConfirmSerializer,
+    PasswordResetSerializer,
     ResetPasswordSerializer,
     SignupSerializer,
     UserSerializer,
-    PasswordResetSerializer,
-    PasswordResetConfirmSerializer,
-    KudosRemainingSerializer,
 )
 
 
@@ -90,16 +92,27 @@ class KudosCreateView(generics.CreateAPIView):
             raise ValidationError({"receiver": "Receiver not found."})
 
         seven_days_ago = timezone.now() - timedelta(days=7)
-        kudos_count = Kudos.objects.filter(sender=self.request.user, timestamp__gte=seven_days_ago).count()
-        
+        kudos_count = Kudos.objects.filter(
+            sender=self.request.user, timestamp__gte=seven_days_ago
+        ).count()
+
         if kudos_count >= 3:
-            raise ValidationError({"non_field_errors": ["You have no kudos left to give. please try after 7 days"]})
-        
+            raise ValidationError(
+                {
+                    "non_field_errors": [
+                        "You have no kudos left to give. please try after 7 days"
+                    ]
+                }
+            )
+
         self.request.user.kudos_count -= 1
         self.request.user.save(update_fields=["kudos_count"])
-        serializer.save(sender=self.request.user, sender_first_name=self.request.user.first_name,
-                        sender_last_name=self.request.user.last_name,
-                        receiver=receiver)
+        serializer.save(
+            sender=self.request.user,
+            sender_first_name=self.request.user.first_name,
+            sender_last_name=self.request.user.last_name,
+            receiver=receiver,
+        )
         return Response({"message": "Kudos sent successfully!"})
 
 
@@ -117,7 +130,9 @@ class LatestKudosView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user  # Get the logged-in user
-        return Kudos.objects.filter(receiver=user).order_by("-timestamp")[:5]  # Fetch latest 5 kudos
+        return Kudos.objects.filter(receiver=user).order_by("-timestamp")[
+            :5
+        ]  # Fetch latest 5 kudos
 
 
 class LogoutView(generics.GenericAPIView):
@@ -160,9 +175,10 @@ class ResetPasswordView(generics.UpdateAPIView):
         if refresh_token:
             token = RefreshToken(refresh_token)
             token.blacklist()
-        return Response({"message": "Password updated successfully! Please login again"})
-    
-    
+        return Response(
+            {"message": "Password updated successfully! Please login again"}
+        )
+
 
 class PasswordResetView(GenericAPIView):
     serializer_class = PasswordResetSerializer
@@ -188,7 +204,10 @@ class PasswordResetView(GenericAPIView):
                 fail_silently=False,
             )
 
-            return Response({"message": "Password reset link sent!"}, status=status.HTTP_200_OK)
+            return Response(
+                {"message": "Password reset link sent!"},
+                status=status.HTTP_200_OK,
+            )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -201,16 +220,23 @@ class PasswordResetConfirmView(GenericAPIView):
             uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
         except (User.DoesNotExist, ValueError, TypeError):
-            return Response({"error": "Invalid user."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Invalid user."}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         # Validate token
         if not default_token_generator.check_token(user, token):
-            return Response({"token": ["Invalid or expired token."]}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"token": ["Invalid or expired token."]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             user.set_password(serializer.validated_data["new_password"])
             user.save()
-            return Response({"message": "Password reset successful"}, status=status.HTTP_200_OK)
-
+            return Response(
+                {"message": "Password reset successful"},
+                status=status.HTTP_200_OK,
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -2,6 +2,7 @@ import random
 
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
+
 from kudosapp.models import Kudos, Organization
 
 
@@ -33,7 +34,11 @@ class Command(BaseCommand):
             email = f"user{i}@gmail.com"
             if not User.objects.filter(email=email).exists():
                 user = User.objects.create_user(
-                    email=email, first_name="user", last_name=f"{i}", password=f"user{i}@123", organization=org
+                    email=email,
+                    first_name="user",
+                    last_name=f"{i}",
+                    password=f"user{i}@123",
+                    organization=org,
                 )
                 users.append(user)
                 self.stdout.write(self.style.SUCCESS(f"User created: {email}"))
@@ -49,8 +54,10 @@ class Command(BaseCommand):
                 [user for user in users if user != sender]
             )
             Kudos.objects.create(
-                sender=sender, sender_first_name=sender.first_name,
+                sender=sender,
+                sender_first_name=sender.first_name,
                 sender_last_name=sender.last_name,
-                receiver=receiver, message="Great job!"
+                receiver=receiver,
+                message="Great job!",
             )
         self.stdout.write(self.style.SUCCESS("Kudos created!"))

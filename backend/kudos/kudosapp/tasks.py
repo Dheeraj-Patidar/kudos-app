@@ -1,8 +1,11 @@
 from datetime import timedelta
-from django.contrib.auth import get_user_model
+
 from celery import shared_task
+from django.contrib.auth import get_user_model
 from django.utils.timezone import now
+
 User = get_user_model()
+
 
 @shared_task
 def reset_kudos_count():
@@ -11,34 +14,6 @@ def reset_kudos_count():
     User.objects.filter(kudos_last_reset__lt=seven_days_ago).update(
         kudos_count=3, kudos_last_reset=now()
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # from celery import shared_task
