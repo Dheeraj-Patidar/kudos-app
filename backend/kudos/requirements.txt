@@ -1,9 +1,11 @@
 amqp==5.3.1
+apturl==0.5.2
 asgiref==3.8.1
 backports.zoneinfo==0.2.1
 bcrypt==3.1.7
 billiard==4.2.1
 blinker==1.4
+Brlapi==0.7.0
 celery==5.5.2
 certifi==2019.11.28
 chardet==3.0.4
@@ -12,11 +14,15 @@ click-didyoumean==0.3.1
 click-plugins==1.1.1
 click-repl==0.3.0
 colorama==0.4.3
+command-not-found==0.3
 coverage==7.6.1
 cron-descriptor==1.4.5
 cryptography==2.8
+cupshelpers==1.0
 dbus-python==1.2.16
+defer==1.0.6
 distro==1.4.0
+distro-info==0.23+ubuntu1.1
 Django==4.2.20
 django-celery-beat==2.8.0
 django-cors-headers==4.4.0
@@ -25,6 +31,7 @@ django-timezone-field==7.1
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
 dotenv==0.9.9
+duplicity==0.8.12.0
 entrypoints==0.3
 exceptiongroup==1.2.2
 fasteners==0.14.1
