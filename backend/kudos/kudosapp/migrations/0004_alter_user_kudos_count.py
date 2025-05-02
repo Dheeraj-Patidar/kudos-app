@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("kudosapp", "0003_user_kudos_count_user_kudos_last_reset"),
-    ]
+    dependencies = [("kudosapp", "0003_user_kudos_count_user_kudos_last_reset")]
 
     operations = [
         migrations.AlterField(
             model_name="user",
             name="kudos_count",
             field=models.PositiveIntegerField(default=3),
-        ),
+        )
     ]

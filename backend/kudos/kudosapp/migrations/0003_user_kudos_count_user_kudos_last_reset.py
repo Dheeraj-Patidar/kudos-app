@@ -6,9 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("kudosapp", "0002_organization_kudos_user_organization"),
-    ]
+    dependencies = [("kudosapp", "0002_organization_kudos_user_organization")]
 
     operations = [
         migrations.AddField(

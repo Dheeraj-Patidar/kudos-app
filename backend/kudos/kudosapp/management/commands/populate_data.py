@@ -2,7 +2,6 @@ import random
 
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
-
 from kudosapp.models import Kudos, Organization
 
 
@@ -18,12 +17,8 @@ class Command(BaseCommand):
         # Create Admin User
         admin_email = "admin@gmail.com"
         if not User.objects.filter(email=admin_email).exists():
-            User.objects.create_superuser(
-                email=admin_email, password="admin@123"
-            )
-            self.stdout.write(
-                self.style.SUCCESS(f"Admin user created: {admin_email}")
-            )
+            User.objects.create_superuser(email=admin_email, password="admin@123")
+            self.stdout.write(self.style.SUCCESS(f"Admin user created: {admin_email}"))
         else:
             self.stdout.write(
                 self.style.SUCCESS(f"Admin user already exists: {admin_email}")
@@ -43,16 +38,12 @@ class Command(BaseCommand):
                 users.append(user)
                 self.stdout.write(self.style.SUCCESS(f"User created: {email}"))
             else:
-                self.stdout.write(
-                    self.style.SUCCESS(f"User already exists: {email}")
-                )
+                self.stdout.write(self.style.SUCCESS(f"User already exists: {email}"))
 
         # Create Kudos
         for _ in range(10):
             sender = random.choice(users)
-            receiver = random.choice(
-                [user for user in users if user != sender]
-            )
+            receiver = random.choice([user for user in users if user != sender])
             Kudos.objects.create(
                 sender=sender,
                 sender_first_name=sender.first_name,

@@ -12,13 +12,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .serializers import (
-    PasswordResetConfirmSerializer,
-    PasswordResetSerializer,
-)
-
-User = get_user_model()
-
 from .models import Kudos, Organization, User
 from .serializers import (
     KudosRemainingSerializer,
@@ -145,13 +138,11 @@ class LogoutView(generics.GenericAPIView):
             token.blacklist()  # Blacklist the token
 
             return Response(
-                {"detail": "Successfully logged out."},
-                status=status.HTTP_200_OK,
+                {"detail": "Successfully logged out."}, status=status.HTTP_200_OK
             )
         except Exception:
             return Response(
-                {"error": "Invalid refresh token."},
-                status=status.HTTP_400_BAD_REQUEST,
+                {"error": "Invalid refresh token."}, status=status.HTTP_400_BAD_REQUEST
             )
 
 
@@ -168,7 +159,7 @@ class ResetPasswordView(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         """Override update to return a success message."""
-        response = super().update(request, *args, **kwargs)
+        super().update(request, *args, **kwargs)
 
         # Safely get refresh token from request
         refresh_token = request.data.get("refresh_token")
@@ -205,8 +196,7 @@ class PasswordResetView(GenericAPIView):
             )
 
             return Response(
-                {"message": "Password reset link sent!"},
-                status=status.HTTP_200_OK,
+                {"message": "Password reset link sent!"}, status=status.HTTP_200_OK
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -236,7 +226,6 @@ class PasswordResetConfirmView(GenericAPIView):
             user.set_password(serializer.validated_data["new_password"])
             user.save()
             return Response(
-                {"message": "Password reset successful"},
-                status=status.HTTP_200_OK,
+                {"message": "Password reset successful"}, status=status.HTTP_200_OK
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -53,9 +53,7 @@ class User(AbstractUser):
 
 class Kudos(models.Model):
     sender = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="kudos_given",
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="kudos_given"
     )
     sender_first_name = models.CharField(max_length=255, null=True, blank=True)
     sender_last_name = models.CharField(max_length=255, null=True, blank=True)

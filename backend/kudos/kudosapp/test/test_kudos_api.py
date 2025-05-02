@@ -3,9 +3,8 @@ from datetime import timedelta
 import pytest
 from django.urls import reverse
 from django.utils import timezone
-from rest_framework import status
-
 from kudosapp.models import Kudos
+from rest_framework import status
 
 
 @pytest.mark.django_db

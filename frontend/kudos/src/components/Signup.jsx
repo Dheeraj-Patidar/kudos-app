@@ -11,7 +11,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const [organization, setOrganization] = useState("");
-  const [organizations, setOrganizations] = useState([]); 
+  const [organizations, setOrganizations] = useState([]);
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
@@ -82,11 +82,11 @@ const Signup = () => {
                     className={`form-control ${errors.email ? "is-invalid" : ""}`}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    
+
                   />
                   {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                 </div>
-                
+
                 <div className="mb-3">
                   <label className="form-label">First Name</label>
                   <input
@@ -94,7 +94,7 @@ const Signup = () => {
                     className={`form-control ${errors.firstname ? "is-invalid" : ""}`}
                     value={firstname}
                     onChange={(e) => setFirstName(e.target.value)}
-                    
+
                   />
                   {errors.firstname && <div className="invalid-feedback">{errors.firstname}</div>}
                 </div>
@@ -106,7 +106,7 @@ const Signup = () => {
                     className={`form-control ${errors.lastname ? "is-invalid" : ""}`}
                     value={lastname}
                     onChange={(e) => setLastName(e.target.value)}
-                    
+
                   />
                   {errors.lastname && <div className="invalid-feedback">{errors.lastname}</div>}
                 </div>
@@ -118,7 +118,7 @@ const Signup = () => {
                     className={`form-control ${errors.password ? "is-invalid" : ""}`}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    
+
                   />
                   {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                 </div>
@@ -130,7 +130,7 @@ const Signup = () => {
                     className={`form-control ${errors.repassword ? "is-invalid" : ""}`}
                     value={repassword}
                     onChange={(e) => setRepassword(e.target.value)}
-                   
+
                   />
                   {errors.repassword && <div className="invalid-feedback">{errors.repassword}</div>}
                 </div>

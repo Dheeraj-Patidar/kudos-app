@@ -7,7 +7,7 @@ const getAccessToken = () => localStorage.getItem("accessToken");
 
 // Helper function to refresh token if needed
 export const getRefreshToken = async () => {
-  
+
   const refreshToken = localStorage.getItem("refreshToken");
   // if (!refreshToken) {
   //   throw new Error("No refresh token found. Please log in again.");
@@ -15,7 +15,7 @@ export const getRefreshToken = async () => {
   // if (refreshToken){
   try {
     const response = await axios.post(`${BASE_URL}/login/refresh/`, { refresh: refreshToken });
-    
+
     const newAccessToken = response.data.access;
     localStorage.setItem("accessToken", newAccessToken);
     console.log("access token",newAccessToken)
@@ -24,7 +24,7 @@ export const getRefreshToken = async () => {
     console.error("Token refresh failed:", error);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    
+
     // throw new Error("Session expired. Please log in again.");
   }
 // }
@@ -121,7 +121,7 @@ api.interceptors.response.use(
 //    (response) => response,
 //    async (error) => {
 //     const originalRequest = error.config;
-  
+
 //     if (error.response?.status === 401 && !originalRequest._retry) {
 //      originalRequest._retry = true;
 //      try {
@@ -133,7 +133,7 @@ api.interceptors.response.use(
 //       return Promise.reject(refreshError);
 //      }
 //     }
-  
+
 //     return Promise.reject(error);
 //    }
 //   );
@@ -208,7 +208,7 @@ export const getkudoscount = async () => {
     return response.data
   } catch (error) {
     console.error("Error fetching Kudos count:", error);
-    throw error; 
+    throw error;
   }
 
 };
@@ -375,7 +375,7 @@ export const getkudoscount = async () => {
       // } else {
       //   throw error; // Handle other errors
       // }
-      
+
 //     }
 //   } catch (error) {
 //     console.error("Unexpected error during logout:", error);
@@ -467,7 +467,7 @@ export const getkudoscount = async () => {
 //   //     throw error;
 //   //   }
 //   // }
-  
+
 //   return axios.get(`${BASE_URL}/latestkudos/`, {
 //     headers: {
 //       Authorization: `Bearer ${token}`, // Set token in request header

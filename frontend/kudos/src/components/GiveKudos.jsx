@@ -14,27 +14,27 @@ const GiveKudos = ({ setKudosCount }) => {
         const fetchReceivers = async () => {
             try {
                 const response = await getUser();
-                setReceivers(response.data);    
+                setReceivers(response.data);
             } catch (error) {
                 console.error("Failed to fetch receivers:", error);
                 toast.error("Failed to load receivers.");
             }
-        };  
+        };
         fetchReceivers();
     }, []);
 
     const handleGiveKudos = async (e) => {
         e.preventDefault();
         let validationErrors = {};
-    
+
         if (!receiver) validationErrors.receiver = "Receiver is required.";
         if (!message) validationErrors.message = "Message is required.";
-    
+
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
-    
+
         try {
             await giveKudos(receiver, message);
             const updatedKudosCount = await getkudoscount();
@@ -46,19 +46,19 @@ const GiveKudos = ({ setKudosCount }) => {
         } catch (error) {
             if (error.response && error.response.data) {
                 console.error("Error response:", error.response.data);
-                
+
                 const backendErrors = error.response.data;
-    
+
                 // Handle receiver-related errors (e.g., user not found)
                 if (backendErrors.receiver) {
                     validationErrors.receiver = backendErrors.receiver;
                 }
-    
+
                 // Handle general errors (e.g., no kudos left, rate limit)
                 if (backendErrors.non_field_errors) {
                     backendErrors.non_field_errors.forEach((err) => toast.error(err));
                 }
-    
+
                 // Preserve all validation errors
                 setErrors(validationErrors);
             } else {
@@ -67,7 +67,7 @@ const GiveKudos = ({ setKudosCount }) => {
             }
         }
     };
-    
+
 
     return(
         <div className="container mt-4">

@@ -30,7 +30,7 @@ const Navbar = ({ kudosCount }) => {
   //       console.error("Error fetching Kudos count:", error);
   //     }
   //   };
-  
+
   //   fetchKudosCount();
   // }, []);
 
@@ -41,10 +41,10 @@ const Navbar = ({ kudosCount }) => {
         <h5>Kudos Balance ({kudosCount})</h5>
         ):("")
       )}
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
         >
           <span className="navbar-toggler-icon"></span>
@@ -55,19 +55,19 @@ const Navbar = ({ kudosCount }) => {
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
-            
-          
+
+
             <li className="nav-item">
 
               {isAuthenticated ? (
                 <div className="d-flex">
                 <Link className="nav-link" to="/kudos">Your Kudos</Link>
-                
+
                 <Link className="nav-link" to="/givekudos">Give-Kudos</Link>
-              
+
                 <Link className="nav-link" to="/resetpassword">Reset-Password</Link>
 
-                <button 
+                <button
                 className="btn btn-danger"
                 onClick={handleLogout}
               >
@@ -78,13 +78,13 @@ const Navbar = ({ kudosCount }) => {
               ) : (
                 <div className="d-flex">
                     <Link className="nav-link" to="/login">Login</Link>
-                    
+
                     <Link className="nav-link" to="/signup">Sign-up</Link>
-                   
+
                 </div>
               )}
             </li>
-           
+
           </ul>
         </div>
       </div>

@@ -37,7 +37,7 @@ const ResetPassword = () => {
       navigate("/login");
     } catch (error) {
         if (error.response && error.response.data) {
-            
+
             toast.error("Old Password is incorrect.");
           }
     }

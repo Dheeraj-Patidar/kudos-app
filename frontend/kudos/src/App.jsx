@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css'
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
-import Login from "./components/Login"; 
+import Login from "./components/Login";
 import Home from "./components/Home";
 import ResetPassword from "./components/ResetPassword";
 import PrivateRoute from "./components/PrivateRoute";
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-    
+
     <Router>
     <Navbar kudosCount={kudosCount}/>
       <Routes>

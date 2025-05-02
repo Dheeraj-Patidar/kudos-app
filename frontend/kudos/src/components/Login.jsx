@@ -36,8 +36,8 @@ const Login =({setKudosCount})=>{
             // console.error("Full error object:", error);
             toast.error(error.response.data.detail);
     }
-        
-        
+
+
     };
 
     return (
@@ -49,7 +49,7 @@ const Login =({setKudosCount})=>{
                             <h3>Login</h3>
                         </div>
                         <div className="card-body">
-                        
+
                             <form onSubmit={handleLogin}>
                                 <div className="mb-3">
                                     <label className="form-label">Email</label>

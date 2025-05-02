@@ -3,8 +3,8 @@ import { getKudos } from "../Api";
 
 const Kudos = () => {
     const [kudos, setKudos] = useState([]);
-    const [filter, setFilter] = useState("all"); 
-    
+    const [filter, setFilter] = useState("all");
+
     const [error, setError] = useState(null);
 
     useEffect(() => {

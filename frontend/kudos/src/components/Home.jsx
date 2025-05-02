@@ -17,7 +17,7 @@ const Home = () => {
                 const lastWeek = new Date();
                 lastWeek.setDate(now.getDate() - 7);
 
-                const kudosThisWeek = kudos.filter(kudo => 
+                const kudosThisWeek = kudos.filter(kudo =>
                     new Date(kudo.timestamp) >= lastWeek
                 );
 
@@ -37,13 +37,13 @@ const Home = () => {
             } catch (error) {
                 console.error("Error fetching kudos:", error);
                 setError("Failed to load top user.");
-            } 
+            }
         };
 
         fetchTopUser();
     }, []);
 
-    
+
     useEffect(() => {
     const fetchlatestKudos = async () => {
         try{
@@ -94,7 +94,7 @@ const Home = () => {
             </div>
         </div>
         </div>
-        
+
     );
 };
 

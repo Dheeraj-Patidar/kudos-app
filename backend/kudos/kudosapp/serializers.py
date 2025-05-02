@@ -60,7 +60,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Organization
         fields = ["id", "name"]
@@ -87,15 +86,13 @@ class KudosSerializer(serializers.ModelSerializer):
 
         receiver_email = self.initial_data.get(
             "receiver"
-        )  #  Use initial_data to get receiver
+        )  # Use initial_data to get receiver
 
         if not receiver_email:
             raise ValidationError({"receiver": "This field is required."})
 
         if sender.email == receiver_email:
-            raise ValidationError(
-                {"receiver": "Receiver cannot be the sender."}
-            )
+            raise ValidationError({"receiver": "Receiver cannot be the sender."})
 
         try:
             receiver = User.objects.get(email=receiver_email)
@@ -119,19 +116,13 @@ class ResetPasswordSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data["new_password"] != data["confirm_password"]:
-            raise ValidationError(
-                {"confirm_password": "Passwords do not match."}
-            )
+            raise ValidationError({"confirm_password": "Passwords do not match."})
         user = self.context["request"].user
         if not user.check_password(data["old_password"]):
-            raise ValidationError(
-                {"old_password": "Old password is incorrect."}
-            )
+            raise ValidationError({"old_password": "Old password is incorrect."})
         if not len(data["new_password"]) >= 8:
             raise ValidationError(
-                {
-                    "new_password": "Password must be at least 8 characters long."
-                }
+                {"new_password": "Password must be at least 8 characters long."}
             )
         return data
 
@@ -147,9 +138,7 @@ class PasswordResetSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         if not User.objects.filter(email=value).exists():
-            raise serializers.ValidationError(
-                "User with this email does not exist."
-            )
+            raise serializers.ValidationError("User with this email does not exist.")
         return value
 
 

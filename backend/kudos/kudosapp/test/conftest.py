@@ -1,10 +1,27 @@
 import pytest
 from django.contrib.auth import get_user_model
+from django.core.management import call_command
+from django.db import DEFAULT_DB_ALIAS, connections
+from kudosapp.models import Organization
 from rest_framework.test import APIClient
 
-from kudosapp.models import Organization
-
 User = get_user_model()
+
+
+@pytest.fixture(scope="session")
+def create_test_db():
+    """
+    Set up the test database at the beginning of the test session,
+    and tear it down at the end.
+    """
+    # Ensure the test database is set up and migrations are applied
+    call_command("migrate", database=DEFAULT_DB_ALIAS)
+
+    yield
+
+    with connections["default"].cursor() as cursor:
+        cursor.execute("DROP DATABASE IF EXISTS test_kudos_db;")
+        connections["default"].close()
 
 
 @pytest.fixture
