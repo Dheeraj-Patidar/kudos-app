@@ -16,7 +16,6 @@ coverage==7.6.1
 cron-descriptor==1.4.5
 cryptography==2.8
 dbus-python==1.2.16
-defer==1.0.6
 distro==1.4.0
 Django==4.2.20
 django-celery-beat==2.8.0
