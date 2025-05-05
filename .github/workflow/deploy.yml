@@ -37,6 +37,14 @@ jobs:
         run: |
           python manage.py migrate
 
+      - name: Install pre-commit hooks
+        run: |
+          pip install pre-commit
+          pre-commit install
+
+      - name: Run pre-commit hooks
+        run: |
+          pre-commit run --all-files
 
       - name: Run tests
         working-directory: backend/kudos
