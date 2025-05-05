@@ -35,7 +35,7 @@ repos:
       - id: flake8
         args:
           [
-            "--config=backend/kudos/.flake8",
+            "--config=.flake8",
           ]
 
   - repo: https://github.com/pre-commit/mirrors-autopep8
