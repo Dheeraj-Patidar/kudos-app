@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { resetPassword } from "../api"; // Import API function
+import { resetPassword } from "../Api"; // Import API function
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const ResetPassword = () => {

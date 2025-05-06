@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { logout, getkudoscount} from "../api";
+import { logout, getkudoscount} from "../Api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { useEffect, useState } from "react";

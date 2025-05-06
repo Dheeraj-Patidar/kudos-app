@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { giveKudos } from "../api";
+import { giveKudos } from "../Api";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { getUser,getkudoscount} from "../api";
+import { getUser,getkudoscount} from "../Api";
 
 const GiveKudos = ({ setKudosCount }) => {
     const [receiver, setReceiver] = useState("");
