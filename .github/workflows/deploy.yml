@@ -57,13 +57,13 @@ jobs:
     needs: backend-ci
     if: needs.backend-ci.outputs.ci-success == 'true'
     runs-on: ubuntu-latest
-
     steps:
-      - name: Trigger Render Backend Deploy
-        uses: render-examples/render-deploy@v1
-        with:
-          apiKey: ${{ secrets.RENDER_API_KEY }}
-          serviceId: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+        - name: Trigger Render Backend Deploy
+          uses: johnbeynon/render-deploy-action@v0.0.8
+          with:
+            service-id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+            api-key:    ${{ secrets.RENDER_API_KEY }}
+
 
   # ─── 3) FRONTEND CD ───────────────
   frontend-deploy:
