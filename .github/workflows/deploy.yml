@@ -65,7 +65,7 @@ jobs:
           apiKey: ${{ secrets.RENDER_API_KEY }}
           serviceId: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
 
-  # ─── 3) FRONTEND CD (optional) ───────────────
+  # ─── 3) FRONTEND CD ───────────────
   frontend-deploy:
     needs: backend-ci
     if: needs.backend-ci.outputs.ci-success == 'true'

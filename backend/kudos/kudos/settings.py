@@ -36,7 +36,7 @@ DEBUG = 'RENDER' not in os.environ
 
 # Allow your Render URL through
 ALLOWED_HOSTS = [
-    'kudos-app-xubp.onrender.com', 
+    'kudos-app-xubp.onrender.com',
     'localhost',
     '127.0.0.1',
 ]
