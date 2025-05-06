@@ -16,7 +16,7 @@ def test_give_kudos_success(auth_client, receiver, user):
     )
     print(response)
     assert response.status_code in (201, 200), f"Failed: {response.status_code}, {response.content}"
-   
+
     user.refresh_from_db()
     assert user.kudos_count == initial_kudos_count - 1
 
