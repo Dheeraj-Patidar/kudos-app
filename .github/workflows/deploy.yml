@@ -51,12 +51,4 @@ jobs:
         run: |
           pytest
 
-      - name: Install frontend dependencies
-        run: |
-            cd frontend/kudos
-            npm install
-      - name: Build frontend
-        run: |
-          cd frontend/kudos
-          npm run build
         

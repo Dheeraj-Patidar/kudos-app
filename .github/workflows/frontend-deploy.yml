@@ -1,0 +1,28 @@
+
+name: Build & Deploy Frontend
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: node-version: '18'
+        
+      - name: Install & Build
+        working-directory: frontend/kudos
+        run: |
+          npm ci
+          npm run build
+      - name: Deploy to Render
+        uses: render-examples/render-deploy@v1
+        with:
+          serviceId: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
+          apiKey: ${{ secrets.RENDER_API_KEY }}
