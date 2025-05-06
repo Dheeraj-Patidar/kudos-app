@@ -29,9 +29,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+
+# Automatically turn off debug mode on Render
+DEBUG = 'RENDER' not in os.environ
+
+# Allow your Render URL through
+ALLOWED_HOSTS = ['kudos.onrender.com']  # Replace with actual app name
+
+# Optional: Allow localhost during development
+if DEBUG:
+    ALLOWED_HOSTS += ['localhost', '127.0.0.1']
+
+# DEBUG = True
+
+# ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
