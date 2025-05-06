@@ -1,1 +1,1 @@
-web: gunicorn kudos.wsgi
+web: gunicorn backend/kudos/kudos.wsgi
