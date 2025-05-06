@@ -1,1 +1,1 @@
-web: gunicorn backend.kudos.kudos.wsgi
+PYTHONPATH=backend/kudos gunicorn kudos.wsgi:application
