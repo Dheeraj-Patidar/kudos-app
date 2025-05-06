@@ -35,7 +35,12 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
 DEBUG = 'RENDER' not in os.environ
 
 # Allow your Render URL through
-ALLOWED_HOSTS = ['kudos.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'kudos-app-xubp.onrender.com', 
+    'localhost',
+    '127.0.0.1',
+]
+
 
 # Optional: Allow localhost during development
 if DEBUG:
