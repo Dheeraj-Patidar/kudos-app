@@ -158,6 +158,7 @@ EMAIL_USE_TLS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # If using Vite (React)
     "http://127.0.0.1:5173",
+    "https://kudos-app-1.onrender.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
