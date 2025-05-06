@@ -2,7 +2,7 @@ import axios from "axios";
 
 // const BASE_URL = "http://localhost:8000/api";
 
-const BASE_URL = "api/"+import.meta.env.VITE_API_URL;
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 
 // Helper function to get access token
