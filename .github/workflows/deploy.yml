@@ -13,9 +13,6 @@ jobs:
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
-    outputs:
-      ci-success: ${{ steps.tests.outcome == 'success' }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -37,7 +34,8 @@ jobs:
           pip install -r backend/kudos/requirements.txt
 
       - name: Set SECRET_KEY
-        run: echo "SECRET_KEY=${SECRET_KEY}" >> backend/kudos/.env
+        run: |
+          echo "SECRET_KEY=${SECRET_KEY}" >> backend/kudos/.env
 
       - name: Migrate database
         working-directory: backend/kudos
@@ -49,28 +47,26 @@ jobs:
           pre-commit run --all-files
 
       - name: Run tests
-        id: tests
         working-directory: backend/kudos
         run: pytest
 
   # ─── 2) BACKEND CD ───────────────────────────
   backend-deploy:
     needs: backend-ci
-    if: needs.backend-ci.outputs.ci-success == 'true'
     runs-on: ubuntu-latest
+    if: success()
     steps:
-        - name: Trigger Render Backend Deploy
-          uses: johnbeynon/render-deploy-action@v0.0.8
-          with:
-            service-id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
-            api-key:    ${{ secrets.RENDER_API_KEY }}
+      - name: Deploy Backend to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
 
-
-  # ─── 3) FRONTEND CD ───────────────
+  # ─── 3) FRONTEND CD ──────────────────────────
   frontend-deploy:
     needs: backend-ci
-    if: needs.backend-ci.outputs.ci-success == 'true'
     runs-on: ubuntu-latest
+    if: success()
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -86,8 +82,8 @@ jobs:
           npm ci
           npm run build
 
-      - name: Trigger Render Frontend Deploy
+      - name: Deploy Frontend to Render
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
           service-id: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
-          api-key:    ${{ secrets.RENDER_API_KEY }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
