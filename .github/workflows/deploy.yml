@@ -78,6 +78,8 @@ jobs:
 
       - name: Build React App
         working-directory: frontend/kudos
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: |
           npm ci
           npm run build
