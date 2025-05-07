@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
 
 
 # Automatically turn off debug mode on Render
-DEBUG = 'RENDER' not in os.environ
+# DEBUG = 'RENDER' not in os.environ
 
 # Allow your Render URL through
 ALLOWED_HOSTS = [
@@ -46,10 +46,10 @@ BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 
 # Optional: Allow localhost during development
-if DEBUG:
-    ALLOWED_HOSTS += ['localhost', '127.0.0.1']
+# if DEBUG:
+#     ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
-# DEBUG = True
+DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
 
