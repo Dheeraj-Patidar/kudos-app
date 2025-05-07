@@ -22,4 +22,5 @@ requests-unixsocket==0.2.0
 sqlparse==0.5.3
 gunicorn==23.0.0
 dj-database-url
-psycopg2-binary
+psycopg2-binary>=2.9
+
