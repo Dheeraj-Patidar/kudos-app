@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from django.http import JsonResponse
 from .views import (
     KudosCreateView,
     KudosReceivedListView,
@@ -39,4 +39,5 @@ urlpatterns = [
     path(
         "organization/list/", OrganizationListView.as_view(), name="organization-list"
     ),
+    path("health/", lambda request: JsonResponse({"status": "ok"})),
 ]
