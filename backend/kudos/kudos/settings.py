@@ -41,6 +41,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+
 
 # Optional: Allow localhost during development
 if DEBUG:
