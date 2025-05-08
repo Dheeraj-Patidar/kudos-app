@@ -36,9 +36,8 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
 # DEBUG = 'RENDER' not in os.environ
 
 # Allow your Render URL through
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split()
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1").split()
 # This results in: ['kudos-app-xubp.onrender.com', 'localhost', '127.0.0.1']
-
 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
