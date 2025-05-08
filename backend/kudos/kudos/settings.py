@@ -165,7 +165,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://kudos-app-1.onrender.com"
 ]
 
-FRONTEND_URL = config('FRONTEND_URL')
+FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:5173')
+
 
 CORS_ALLOW_CREDENTIALS = True
 
