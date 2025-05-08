@@ -7,6 +7,7 @@ const ForgotResetPassword = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ const ForgotResetPassword = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/password-reset-confirm/${uid}/${token}/`,
+        `${BASE_URL}/password-reset-confirm/${uid}/${token}/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
