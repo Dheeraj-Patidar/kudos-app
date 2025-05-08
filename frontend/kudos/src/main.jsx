@@ -5,6 +5,8 @@ import App from './App.jsx'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 import { ToastContainer } from "react-toastify";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 createRoot(document.getElementById('root')).render(
