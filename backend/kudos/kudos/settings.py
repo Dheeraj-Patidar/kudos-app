@@ -17,7 +17,7 @@ from pathlib import Path
 import dj_database_url
 from celery.schedules import crontab
 from dotenv import load_dotenv
-
+from decouple import config
 load_dotenv()  # Load environment variables from .env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -166,7 +166,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://kudos-app-1.onrender.com"
 ]
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+FRONTEND_URL = config("FRONTEND_URL", default="http://localhost:5173")
 
 CORS_ALLOW_CREDENTIALS = True
 
