@@ -40,7 +40,6 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split()
 # This results in: ['kudos-app-xubp.onrender.com', 'localhost', '127.0.0.1']
 
 
-
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 DEBUG = False
