@@ -166,8 +166,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://kudos-app-1.onrender.com"
 ]
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").split()
-
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 CORS_ALLOW_CREDENTIALS = True
 
