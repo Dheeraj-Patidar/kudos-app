@@ -16,8 +16,9 @@ from pathlib import Path
 
 import dj_database_url
 from celery.schedules import crontab
-from dotenv import load_dotenv
 from decouple import config
+from dotenv import load_dotenv
+
 load_dotenv()  # Load environment variables from .env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
