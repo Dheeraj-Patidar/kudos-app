@@ -44,12 +44,9 @@ ALLOWED_HOSTS = [
 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
+DEBUG = False
 
-# Optional: Allow localhost during development
-# if DEBUG:
-#     ALLOWED_HOSTS += ['localhost', '127.0.0.1']
-
-DEBUG = True
+# DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
 
