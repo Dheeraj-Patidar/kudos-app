@@ -11,6 +11,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+form django.conf import settings
 
 from .models import Kudos, Organization, User
 from .serializers import (
@@ -184,7 +185,7 @@ class PasswordResetView(GenericAPIView):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
 
-            reset_url = f"http://localhost:5173/reset-password/{uid}/{token}/"
+            reset_url = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}/"
 
             # Send reset email
             send_mail(
