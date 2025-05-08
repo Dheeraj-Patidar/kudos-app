@@ -41,8 +41,6 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1").split()
 
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
-DEBUG = False
-
 DEBUG = True
 
 # ALLOWED_HOSTS = ["*"]
@@ -168,10 +166,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://kudos-app-1.onrender.com"
 ]
 
-if DEBUG:
-    FRONTEND_URL = "http://127.0.0.1:5173"
-else:
-    FRONTEND_URL = os.getenv("FRONTEND_URL")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").split()
 
 
 CORS_ALLOW_CREDENTIALS = True
